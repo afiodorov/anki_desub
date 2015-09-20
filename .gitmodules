@@ -1,0 +1,3 @@
+[submodule "keepOneColor"]
+	path = keepOneColor
+	url = git@github.com:afiodorov/keepOneColor.git
