@@ -4,6 +4,8 @@ import os.path
 import PyQt4.QtGui as qg
 import PyQt4.QtCore as QtCore
 import PIL.Image as image
+import widgets
+import ocr.tesseract
 
 
 def isImage(filepath):
@@ -49,12 +51,18 @@ class Window(qg.QWidget):
         layout = qg.QVBoxLayout()
 
         for imagePath in getImages('.'):
-            resizedImagedPath = resizeImage(imagePath)
-            pixmap = qg.QPixmap(os.path.join(os.getcwd(), resizedImagedPath))
-            label = qg.QLabel(self)
-            label.setPixmap(pixmap)
-            label.resize(pixmap.width(), pixmap.height())
-            layout.addWidget(label)
+            resizedImagePath = resizeImage(imagePath)
+            flashCard = widgets.ImageText(resizedImagePath)
+
+            try:
+                text = ocr.tesseract.recognise(imagePath, '(255, 255, 0)',
+                                               'deu')
+                flashCard.textFront.setText(text)
+            except ocr.tesseract.ParsingFailed as e:
+                print e
+                pass
+
+            layout.addWidget(flashCard)
 
         quitBtn = qg.QPushButton('Quit', self)
         layout.addWidget(quitBtn)
