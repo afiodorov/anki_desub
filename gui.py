@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import sys
 import os.path
@@ -24,17 +26,18 @@ def resizeImage(imagePath):
         originalImage = image.open(imageTempPath)
     except IOError:
         originalImage = image.open(imagePath)
+        width, height = originalImage.size
 
-        if(originalImage.width > maxWidth):
-            scalingFactorW = originalImage.width / maxWidth
-        if(originalImage.height > maxHeight):
-            scalingFactorH = originalImage.height / maxHeight
+        if(width > maxWidth):
+            scalingFactorW = width / maxWidth
+        if(height > maxHeight):
+            scalingFactorH = height / maxHeight
 
         scalingFactor = max(scalingFactorW, scalingFactorH)
 
         if scalingFactor > 1.0:
-            newWidth = originalImage.width / scalingFactor
-            newHeight = originalImage.height / scalingFactor
+            newWidth = width / scalingFactor
+            newHeight = height / scalingFactor
             resizedImaged = originalImage.resize((newWidth, newHeight),
                                                  image.ANTIALIAS)
             resizedImaged.save(imageTempPath)

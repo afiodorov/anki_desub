@@ -21,7 +21,7 @@ def recognise(imagePath, subtitleColor, language):
                                 '--keep', subtitleColor])
         output = subprocess.check_output(['tesseract', tmpfilePath, '-', '-l',
                                          language])
-        return output.strip()
+        return output.decode('utf-8', errors='strict').strip()
     except subprocess.CalledProcessError as e:
         raise ParsingFailed(e)
 
