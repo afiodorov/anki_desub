@@ -1,6 +1,8 @@
 import os
+import sys
 import os.path
-import Tkinter as tk
+import PyQt4.QtGui as qg
+import PyQt4.QtCore as QtCore
 import PIL.Image as image
 
 
@@ -38,31 +40,34 @@ def resizeImage(imagePath):
     return imageTempPath
 
 
-class Application(tk.Frame):
-    def say_hi(self):
-        print "hi there, everyone!"
+class Window(qg.QWidget):
+    def __init__(self):
+        super(Window, self).__init__()
+        self.initGui()
 
-    def createWidgets(self):
-        self.QUIT = tk.Button(self)
-        self.QUIT["text"] = "QUIT"
-        self.QUIT["fg"] = "red"
-        self.QUIT["command"] = self.quit
-        self.QUIT.pack({"side": "left"})
+    def initGui(self):
+        layout = qg.QVBoxLayout()
 
-        self.photoImages = []
         for imagePath in getImages('.'):
-            imageTk = tk.PhotoImage(file=resizeImage(imagePath))
-            label = tk.Label(self, image=imageTk)
-            label.image = imageTk
-            label.pack()
-            self.photoImages.append(image)
+            resizedImagedPath = resizeImage(imagePath)
+            pixmap = qg.QPixmap(os.path.join(os.getcwd(), resizedImagedPath))
+            label = qg.QLabel(self)
+            label.setPixmap(pixmap)
+            label.resize(pixmap.width(), pixmap.height())
+            layout.addWidget(label)
 
-    def __init__(self, master=None):
-        tk.Frame.__init__(self, master)
-        self.pack()
-        self.createWidgets()
+        quitBtn = qg.QPushButton('Quit', self)
+        layout.addWidget(quitBtn)
+        quitBtn.clicked.connect(QtCore.QCoreApplication.instance().quit)
+        quitBtn.resize(quitBtn.sizeHint())
 
-root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
-root.destroy()
+        self.resize(800, 800)
+        self.setWindowTitle('Hello')
+        self.setLayout(layout)
+        self.show()
+
+
+application = qg.QApplication(sys.argv)
+win = Window()
+
+sys.exit(application.exec_())
