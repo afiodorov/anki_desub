@@ -15,7 +15,6 @@ in a foreign language and then create flashcards automatically.
 
 Sorted by priority:
 
-* Make the main window scrollable
 * Add Anki Export
 * Add threading for fetching translations
 * Add ability to change settings

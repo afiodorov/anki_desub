@@ -54,6 +54,8 @@ class Window(qg.QWidget):
     def initGui(self):
         layout = qg.QVBoxLayout()
 
+        widget = qg.QWidget()
+
         for imagePath in getImages('.'):
             resizedImagePath = resizeImage(imagePath)
             flashCard = widgets.ImageText(resizedImagePath)
@@ -75,9 +77,19 @@ class Window(qg.QWidget):
         quitBtn.clicked.connect(QtCore.QCoreApplication.instance().quit)
         quitBtn.resize(quitBtn.sizeHint())
 
+        widget.setLayout(layout)
+
+        scroll = qg.QScrollArea()
+        scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        scroll.setWidget(widget)
+
+        vLayout = qg.QVBoxLayout(self)
+        vLayout.addWidget(scroll)
+
+        self.setLayout(vLayout)
         self.resize(800, 800)
         self.setWindowTitle('AnkiDesubber')
-        self.setLayout(layout)
         self.show()
 
 
