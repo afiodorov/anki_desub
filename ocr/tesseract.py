@@ -47,4 +47,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print recognise(args.imagePath, args.color, args.language)
+    print recognise(args.imagePath, args.color, args.language).encode('utf-8')
