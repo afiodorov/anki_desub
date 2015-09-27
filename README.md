@@ -10,3 +10,12 @@ This is designed so that I can simply take screenshots whilst watching a movie
 in a foreign language and then create flashcards automatically.
 
 ![AnkiDesubber](https://raw.githubusercontent.com/afiodorov/anki_desub/master/desubber.png)
+
+## TODO
+
+Sorted by priority:
+
+* Make the main window scrollable
+* Add Anki Export
+* Add threading for fetching translations
+* Add ability to change settings
