@@ -8,6 +8,7 @@ import PyQt4.QtCore as QtCore
 import PIL.Image as image
 import widgets
 import ocr.tesseract
+from translators import bing
 
 
 def isImage(filepath):
@@ -61,6 +62,8 @@ class Window(qg.QWidget):
                 text = ocr.tesseract.recognise(imagePath, '(255, 255, 0)',
                                                'deu')
                 flashCard.textFront.setText(text)
+                backText = bing.translate(text, 'en', 'de')
+                flashCard.textBack.setText(backText)
             except ocr.tesseract.ParsingFailed as e:
                 print e
                 pass
@@ -73,7 +76,7 @@ class Window(qg.QWidget):
         quitBtn.resize(quitBtn.sizeHint())
 
         self.resize(800, 800)
-        self.setWindowTitle('Hello')
+        self.setWindowTitle('AnkiDesubber')
         self.setLayout(layout)
         self.show()
 
