@@ -1,3 +1,4 @@
 keepOneColor/
 venv/
 *.pyc
+bingToken.json
